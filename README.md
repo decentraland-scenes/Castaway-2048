@@ -40,3 +40,8 @@ Click and drag in a direction to move all the gems in that direction. If two ide
 If all the spaces are full and you can't free them by merging gems, you loose.
 
 Learn more about how to build your own scenes in our [documentation](https://docs.decentraland.org/) site.
+
+
+## Copyright info
+
+This scene is protected with a standard Apache 2 licence. See the terms and conditions in the [LICENSE](/LICENSE) file.
