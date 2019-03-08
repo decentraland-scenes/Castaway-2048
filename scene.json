@@ -25,6 +25,10 @@
     "blacklist": [],
     "teleportPosition": ""
   },
+  "tracking": {
+    "origin": "example",
+    "boilerplate": "2048"
+  },
   "main": "bin/game.js",
   "tags": []
 }
