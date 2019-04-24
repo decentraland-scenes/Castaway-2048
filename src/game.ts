@@ -313,7 +313,7 @@ const island = new Entity()
 island.addComponent(new GLTFShape('models/Island.gltf'))
 island.addComponent(new Transform({
   position: new Vector3(8, 0, 8),
-  rotation: Quaternion.Euler(0, 90, 0)
+  rotation: Quaternion.Euler(0, 270, 0)
 }))
 engine.addEntity(island)
 
@@ -334,7 +334,7 @@ engine.addEntity(banner)
 const chest = new Entity()
 chest.addComponent(new Transform({
   position: new Vector3(8, 0.2, 8),
-  rotation: Quaternion.Euler(0, 90, 0),
+  rotation: Quaternion.Euler(0, 270, 0),
   scale: new Vector3(0.8, 0.8, 0.8)
 }))
 chest.addComponent(new GLTFShape('models/Chest.gltf'))
@@ -356,7 +356,7 @@ engine.addEntity(chest)
 
 // Chest Light
 const chestLight = new Entity()
-chestLight.addComponent(new Transform())
+chestLight.addComponent(new Transform({rotation: Quaternion.Euler(0,180,0)}))
 chestLight.setParent(chest)
 chestLight.addComponent(new GLTFShape('models/Light.gltf'))
 let chestLightAnimator = new Animator()
@@ -383,6 +383,7 @@ const map = new Entity()
 map.setParent(boardWrapper)
 map.addComponent(new Transform({
   position: new Vector3(0, 1, 0),
+  rotation: Quaternion.Euler(0, 180, 0),
   scale: new Vector3(2, 2, 2)
 }))
 map.addComponent(new GLTFShape('models/Map.gltf'))
