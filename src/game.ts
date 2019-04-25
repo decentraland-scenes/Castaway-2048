@@ -406,12 +406,12 @@ let swipeChecker = new SwipeDetection()
 
 // Swipe detection
 
-input.subscribe('BUTTON_A_DOWN', e => {
+input.subscribe('BUTTON_DOWN', e => {
   swipeChecker.buttonDown(camera)
 })
 
 // button up event
-input.subscribe('BUTTON_A_UP', e => {
+input.subscribe('BUTTON_UP', e => {
   let direction = swipeChecker.buttonUp(camera)
   shiftBlocks(direction)
 })
