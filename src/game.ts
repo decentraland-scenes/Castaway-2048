@@ -318,11 +318,12 @@ island.addComponent(new Transform({
 engine.addEntity(island)
 
 // Banner
-const bannerImage = new BasicMaterial()
-bannerImage.texture = 'textures/Logo2048.png'
+const bannerTexture = new Texture('textures/Logo2048.png')
+const bannerMaterial = new BasicMaterial()
+bannerMaterial.texture = bannerTexture
 
 const banner = new Entity()
-banner.addComponent(bannerImage)
+banner.addComponent(bannerMaterial)
 banner.addComponent(new PlaneShape())
 banner.addComponent(new Transform({
   position: new Vector3(8, 8, 8),
@@ -406,12 +407,12 @@ let swipeChecker = new SwipeDetection()
 
 // Swipe detection
 
-input.subscribe('BUTTON_DOWN', e => {
+input.subscribe('BUTTON_A_DOWN', e => {
   swipeChecker.buttonDown(camera)
 })
 
 // button up event
-input.subscribe('BUTTON_UP', e => {
+input.subscribe('BUTTON_A_UP', e => {
   let direction = swipeChecker.buttonUp(camera)
   shiftBlocks(direction)
 })
