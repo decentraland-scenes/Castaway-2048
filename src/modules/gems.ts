@@ -45,8 +45,8 @@ export class MoveGems implements ISystem {
   }
   update(dt: number) {
     for (let gem of gems.entities) {
-      let data = gem.get(GemData)
-      let transform = gem.get(Transform)
+      let data = gem.getComponent(GemData)
+      let transform = gem.getComponent(Transform)
       if (data.lerp < 1) {
         data.lerp += dt * 2
         if (data.lerp > 1) {
@@ -59,7 +59,7 @@ export class MoveGems implements ISystem {
         if (data.willDie) {
           engine.removeEntity(gem)
           for (let targetGem of gems.entities) {
-            let targetData = targetGem.get(GemData)
+            let targetData = targetGem.getComponent(GemData)
             if (
               targetData.pos.x == data.pos.x &&
               targetData.pos.y == data.pos.y &&
@@ -67,7 +67,7 @@ export class MoveGems implements ISystem {
             ) {
               let targetModelVal = targetData.val
               let shapeIndex = gemValues.indexOf(targetModelVal)
-              targetGem.set(this.gemModels[shapeIndex])
+              targetGem.addComponentOrReplace(this.gemModels[shapeIndex])
               targetData.willUpgrade = false
             }
           }
@@ -81,8 +81,8 @@ export class MoveGems implements ISystem {
 export class GrowGems implements ISystem {
   update(dt: number) {
     for (let gem of gems.entities) {
-      let data = gem.get(GemData)
-      let transform = gem.get(Transform)
+      let data = gem.getComponent(GemData)
+      let transform = gem.getComponent(Transform)
       if (data.sizeLerp < 1) {
         data.sizeLerp += dt
         transform.scale.setAll(Scalar.Lerp(0.05, 0.5, data.sizeLerp))

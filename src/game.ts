@@ -1,5 +1,4 @@
 import { OpenBoard, OpenLerp } from "modules/openchest";
-import { playSound } from '@decentraland/SoundController'
 import { MoveGems, GemData, gems, gemValues, GrowGems, gridToScene } from "./modules/gems";
 import { SwipeDetection, Directions } from "./modules/swiping";
 import { BoardData } from "./modules/board";
@@ -15,7 +14,7 @@ const camera = Camera.instance
 // Helper functions
 
 function openChest() {
-  let state = boardWrapper.get(OpenLerp)
+  let state = boardWrapper.getComponent(OpenLerp)
   state.open = !state.open
   switch (state.open) {
     case true:
@@ -67,13 +66,13 @@ const spawner = {
     if (!ent) return
 
     let shapeIndex = gemValues.indexOf(val)
-    ent.set(gemModels[shapeIndex])
+    ent.addComponentOrReplace(gemModels[shapeIndex])
 
-    let t = ent.getOrCreate(Transform)
+    let t = ent. getComponentOrCreate(Transform)
     t.scale.setAll(0.5)
     t.position = gridToScene(x, y)
 
-    let td = ent.getOrCreate(GemData)
+    let td = ent. getComponentOrCreate(GemData)
     td.reset(val, x, y)
 
     engine.addEntity(ent)
@@ -103,7 +102,7 @@ function addRandomGem() {
   ]
 
   for (let gem in gems.entities) {
-    let gemData = gems.entities[gem].get(GemData)
+    let gemData = gems.entities[gem].getComponent(GemData)
     let gemPos = gemData.nextPos.x + gemData.nextPos.y * 4
     let index = emptyCells.indexOf(gemPos)
     emptyCells.splice(index, 1)
@@ -126,7 +125,7 @@ function shiftBlocks(direction: Directions) {
     // Store what's in the row (or column)
     var currentRow: any[] = [null, null, null, null]
     for (let gem in gems.entities) {
-      let gemPos = gems.entities[gem].get(GemData).nextPos
+      let gemPos = gems.entities[gem].getComponent(GemData).nextPos
       let pos :number
       switch (direction){
         case Directions.UP:
@@ -159,14 +158,14 @@ function shiftBlocks(direction: Directions) {
       let blocked = false
       for (var tile = target + 1; tile < currentRow.length; ++tile) {
         if (currentRow[tile]) {
-          let gemData = currentRow[tile].get(GemData)
+          let gemData = currentRow[tile].getComponent(GemData)
           // if target tile is empty, shift gems
           if (currentRow[target] == null ||  alreadyMerged == true) {
             moveGem(gemData, direction)
             hasChanged = true
           } else {
             // if target tile has a gem, check if it can be merged
-            let targetData = currentRow[target].get(GemData)
+            let targetData = currentRow[target].getComponent(GemData)
             if (gemData.val == targetData.val && 
                 targetData.willUpgrade == false && 
                 targetData.willDie == false &&
@@ -225,7 +224,7 @@ function hasLost(){
     var canMove: boolean = false;
     var fullBoard: any[][] = [[null, null, null, null],[null, null, null, null],[null, null, null, null],[null, null, null, null]]
     for (let gem in gems.entities) {
-        let gemData = gems.entities[gem].get(GemData)
+        let gemData = gems.entities[gem].getComponent(GemData)
         if (!gemData.willDie){
           fullBoard[gemData.nextPos.y][gemData.nextPos.x] = gemData.val
         }
@@ -256,12 +255,12 @@ function hasLost(){
 function doTutorial(){
   let instructions = new Entity()
   instructions.setParent(boardWrapper)
-  instructions.add(new TextShape("Drag gems by clicking and dragging anywhere. \nMerge gems until you reach the highest value!"))
-  instructions.get(TextShape).fontSize = 25
-  instructions.get(TextShape).shadowColor = Color3.Gray()
-  instructions.get(TextShape).shadowOffsetY = 1
-  instructions.get(TextShape).shadowOffsetX = -1
-  instructions.add(new Transform({
+  instructions.addComponent(new TextShape("Drag gems by clicking and dragging anywhere. \nMerge gems until you reach the highest value!"))
+  instructions.getComponent(TextShape).fontSize = 25
+  instructions.getComponent(TextShape).shadowColor = Color3.Gray()
+  instructions.getComponent(TextShape).shadowOffsetY = 1
+  instructions.getComponent(TextShape).shadowOffsetX = -1
+  instructions.addComponent(new Transform({
     position: new Vector3(0, 3, -1),
     scale: new Vector3(8, 8, 1)
   }))
@@ -271,13 +270,13 @@ function doTutorial(){
   buttonMaterial.albedoColor = Color3.Blue()
 
   let button = new Entity()
-  button.add(new PlaneShape())
-  button.add(buttonMaterial)
+  button.addComponent(new PlaneShape())
+  button.addComponent(buttonMaterial)
   button.setParent(boardWrapper)
-  button.add(new Transform({
+  button.addComponent(new Transform({
     position: new Vector3(0, -2.5, -0.5)
   }))
-  button.add(new OnClick(e => {
+  button.addComponent(new OnPointerDown(e => {
     engine.removeEntity(button)
     engine.removeEntity(instructions)
     board.tutorialDone = true
@@ -289,7 +288,7 @@ function doTutorial(){
 
   let buttonText = new Entity()
   buttonText.setParent(button)
-  buttonText.add(new TextShape("Let's start!"))
+  buttonText.addComponent(new TextShape("Let's start!"))
   engine.addEntity(buttonText)
 
   spawner.spawnGem(2, 1, 2)
@@ -311,40 +310,45 @@ const board = new BoardData()
 
 // Island
 const island = new Entity()
-island.add(new GLTFShape('models/Island.gltf'))
-island.add(new Transform({
-  position: new Vector3(5, 0, 5),
-  rotation: Quaternion.Euler(0, 90, 0)
+island.addComponent(new GLTFShape('models/Island.gltf'))
+island.addComponent(new Transform({
+  position: new Vector3(8, 0, 8),
+  rotation: Quaternion.Euler(0, 270, 0)
 }))
 engine.addEntity(island)
 
 // Banner
-const bannerImage = new BasicMaterial()
-bannerImage.texture = 'textures/Logo2048.png'
+const bannerTexture = new Texture('textures/Logo2048.png')
+const bannerMaterial = new BasicMaterial()
+bannerMaterial.texture = bannerTexture
 
 const banner = new Entity()
-banner.add(bannerImage)
-banner.add(new PlaneShape())
-banner.add(new Transform({
-  position: new Vector3(5, 8, 5),
+banner.addComponent(bannerMaterial)
+banner.addComponent(new PlaneShape())
+banner.addComponent(new Transform({
+  position: new Vector3(8, 8, 8),
   scale: new Vector3(6, 6, 6)
 }))
 engine.addEntity(banner)
 
 // Chest
 const chest = new Entity()
-chest.add(new Transform({
-  position: new Vector3(5, 0.2, 5),
-  rotation: Quaternion.Euler(0, 90, 0),
+chest.addComponent(new Transform({
+  position: new Vector3(8, 0.2, 8),
+  rotation: Quaternion.Euler(0, 270, 0),
   scale: new Vector3(0.8, 0.8, 0.8)
 }))
-chest.add(new GLTFShape('models/Chest.gltf'))
-const chestOpen = new AnimationClip('Open', { loop: false })
-const chestClose = new AnimationClip('Close', { loop: false })
-chest.get(GLTFShape).addClip(chestOpen)
-chest.get(GLTFShape).addClip(chestClose)
-chest.add(
-  new OnClick(e => {
+chest.addComponent(new GLTFShape('models/Chest.gltf'))
+let chestAnimator = new Animator()
+chest.addComponent(chestAnimator)
+const chestOpen = new AnimationClip('Open')
+chestOpen.looping = false
+const chestClose = new AnimationClip('Close')
+chestClose.looping = false
+chestAnimator.addClip(chestOpen)
+chestAnimator.addClip(chestClose)
+chest.addComponent(
+  new OnPointerDown(e => {
     openChest()
   })
 )
@@ -353,32 +357,37 @@ engine.addEntity(chest)
 
 // Chest Light
 const chestLight = new Entity()
-chestLight.add(new Transform())
+chestLight.addComponent(new Transform({rotation: Quaternion.Euler(0,180,0)}))
 chestLight.setParent(chest)
-chestLight.add(new GLTFShape('models/Light.gltf'))
-const chestLightOpen = new AnimationClip('Light_Open', { loop: false })
-const chestLightClose = new AnimationClip('Light_Close', { loop: false })
-chestLight.get(GLTFShape).addClip(chestLightOpen)
-chestLight.get(GLTFShape).addClip(chestLightClose)
+chestLight.addComponent(new GLTFShape('models/Light.gltf'))
+let chestLightAnimator = new Animator()
+chestLight.addComponent(chestLightAnimator)
+const chestLightOpen = new AnimationClip('Light_Open')
+const chestLightClose = new AnimationClip('Light_Close')
+chestLightOpen.looping = false
+chestLightClose.looping = false
+chestLightAnimator.addClip(chestLightOpen)
+chestLightAnimator.addClip(chestLightClose)
 engine.addEntity(chestLight)
 
 // Board
 const boardWrapper = new Entity()
-boardWrapper.add(new Transform({
-  position: new Vector3(5, 0, 5),
+boardWrapper.addComponent(new Transform({
+  position: new Vector3(8, 0, 8),
   scale: new Vector3(0.05, 0.05, 0.05)
 }))
-boardWrapper.add(new OpenLerp())
+boardWrapper.addComponent(new OpenLerp())
 engine.addEntity(boardWrapper)
 
 // Map
 const map = new Entity()
 map.setParent(boardWrapper)
-map.add(new Transform({
+map.addComponent(new Transform({
   position: new Vector3(0, 1, 0),
+  rotation: Quaternion.Euler(0, 180, 0),
   scale: new Vector3(2, 2, 2)
 }))
-map.add(new GLTFShape('models/Map.gltf'))
+map.addComponent(new GLTFShape('models/Map.gltf'))
 engine.addEntity(map)
 
 // 3D models for gems
