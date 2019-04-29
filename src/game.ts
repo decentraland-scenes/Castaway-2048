@@ -341,9 +341,9 @@ chest.addComponent(new Transform({
 chest.addComponent(new GLTFShape('models/Chest.gltf'))
 let chestAnimator = new Animator()
 chest.addComponent(chestAnimator)
-const chestOpen = new AnimationClip('Open')
+const chestOpen = new AnimationState('Open')
 chestOpen.looping = false
-const chestClose = new AnimationClip('Close')
+const chestClose = new AnimationState('Close')
 chestClose.looping = false
 chestAnimator.addClip(chestOpen)
 chestAnimator.addClip(chestClose)
@@ -362,8 +362,8 @@ chestLight.setParent(chest)
 chestLight.addComponent(new GLTFShape('models/Light.gltf'))
 let chestLightAnimator = new Animator()
 chestLight.addComponent(chestLightAnimator)
-const chestLightOpen = new AnimationClip('Light_Open')
-const chestLightClose = new AnimationClip('Light_Close')
+const chestLightOpen = new AnimationState('Light_Open')
+const chestLightClose = new AnimationState('Light_Close')
 chestLightOpen.looping = false
 chestLightClose.looping = false
 chestLightAnimator.addClip(chestLightOpen)
@@ -407,12 +407,12 @@ let swipeChecker = new SwipeDetection()
 
 // Swipe detection
 
-input.subscribe('BUTTON_A_DOWN', e => {
+input.subscribe('BUTTON_DOWN', e => {
   swipeChecker.buttonDown(camera)
 })
 
 // button up event
-input.subscribe('BUTTON_A_UP', e => {
+input.subscribe('BUTTON_UP', e => {
   let direction = swipeChecker.buttonUp(camera)
   shiftBlocks(direction)
 })
