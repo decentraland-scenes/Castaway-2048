@@ -256,13 +256,13 @@ function doTutorial(){
   let instructions = new Entity()
   instructions.setParent(boardWrapper)
   instructions.addComponent(new TextShape("Drag gems by clicking and dragging anywhere. \nMerge gems until you reach the highest value!"))
-  instructions.getComponent(TextShape).fontSize = 25
+  instructions.getComponent(TextShape).fontSize = 1
   instructions.getComponent(TextShape).shadowColor = Color3.Gray()
   instructions.getComponent(TextShape).shadowOffsetY = 1
   instructions.getComponent(TextShape).shadowOffsetX = -1
   instructions.addComponent(new Transform({
     position: new Vector3(0, 3, -1),
-    scale: new Vector3(8, 8, 1)
+    scale: new Vector3(4, 4, 1)
   }))
   engine.addEntity(instructions)
 
@@ -276,7 +276,7 @@ function doTutorial(){
   button.addComponent(new Transform({
     position: new Vector3(0, -2.5, -0.5)
   }))
-  button.addComponent(new OnPointerDown(e => {
+  button.addComponent(new OnClick(e => {
     engine.removeEntity(button)
     engine.removeEntity(instructions)
     board.tutorialDone = true
@@ -288,7 +288,11 @@ function doTutorial(){
 
   let buttonText = new Entity()
   buttonText.setParent(button)
-  buttonText.addComponent(new TextShape("Let's start!"))
+  buttonText.addComponent(new TextShape("Let's start!" ))
+  buttonText.getComponent(TextShape).fontSize = 1
+  buttonText.addComponent(new Transform({
+	  position: new Vector3(0, 0 , -0.3)
+  }))
   engine.addEntity(buttonText)
 
   spawner.spawnGem(2, 1, 2)
@@ -348,7 +352,7 @@ chestClose.looping = false
 chestAnimator.addClip(chestOpen)
 chestAnimator.addClip(chestClose)
 chest.addComponent(
-  new OnPointerDown(e => {
+  new OnClick(e => {
     openChest()
   })
 )
