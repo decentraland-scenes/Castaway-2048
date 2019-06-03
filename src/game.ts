@@ -43,7 +43,7 @@ const spawner = {
   MAX_POOL_SIZE: 20,
   pool: [] as Entity[],
 
-  getEntityFromPool(): Entity | null {
+  getEntityFromPool(): IEntity | null {
     for (let i = 0; i < spawner.pool.length; i++) {
       if (!spawner.pool[i].alive) {
         return spawner.pool[i]

@@ -13,7 +13,7 @@ export class OpenLerp {
 
 // motion for items that come out of the chest
 export class OpenBoard implements ISystem {
-    board: Entity
+    board: IEntity
     constructor(board){
       this.board = board
     }
