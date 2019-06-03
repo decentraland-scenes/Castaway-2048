@@ -250,6 +250,14 @@ function hasLost(){
 
 }
 
+// Board
+const boardWrapper = new Entity()
+boardWrapper.addComponent(new Transform({
+  position: new Vector3(8, 0, 8),
+  scale: new Vector3(0.05, 0.05, 0.05)
+}))
+boardWrapper.addComponent(new OpenLerp())
+engine.addEntity(boardWrapper)
 
 
 function doTutorial(){
@@ -373,15 +381,6 @@ chestLightClose.looping = false
 chestLightAnimator.addClip(chestLightOpen)
 chestLightAnimator.addClip(chestLightClose)
 engine.addEntity(chestLight)
-
-// Board
-const boardWrapper = new Entity()
-boardWrapper.addComponent(new Transform({
-  position: new Vector3(8, 0, 8),
-  scale: new Vector3(0.05, 0.05, 0.05)
-}))
-boardWrapper.addComponent(new OpenLerp())
-engine.addEntity(boardWrapper)
 
 // Map
 const map = new Entity()
