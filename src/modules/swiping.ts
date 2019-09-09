@@ -14,13 +14,13 @@ export class SwipeDetection {
   posOnDown: Vector3
   posOnUp: Vector3
   minDistance: number = 5
-  buttonDown(camera: Camera){
+  buttonDown(dir: Vector3){
     this.buttonPressed = true
-    this.posOnDown = camera.rotation.eulerAngles
+    this.posOnDown = dir
   }
-  buttonUp(camera: Camera){
+  buttonUp(dir: Vector3){
     this.buttonPressed = false
-    this.posOnUp = camera.rotation.eulerAngles
+    this.posOnUp = dir
     let deltaX: number = this.posOnDown.x - this.posOnUp.x
     let deltaY: number = this.posOnDown.y - this.posOnUp.y
     let direction: Directions
