@@ -3,8 +3,8 @@
 // lerp data for items that come out of the chest
 @Component('openLerp')
 export class OpenLerp {
-  closedPos: Vector3 = new Vector3(8, 0, 8)
-  openPos: Vector3 = new Vector3(8, 4.5, 8)
+  closedPos: Vector3 = new Vector3(8, 0, 11)
+  openPos: Vector3 = new Vector3(8, 4.5, 11)
   closedScale: number = 0.05
   openScale: number = 0.45
   fraction: number = 0

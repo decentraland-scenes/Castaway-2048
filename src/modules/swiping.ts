@@ -20,17 +20,25 @@ export class SwipeDetection {
   }
   buttonUp(dir: Vector3){
     this.buttonPressed = false
-    this.posOnUp = dir
-    let deltaX: number = this.posOnDown.x - this.posOnUp.x
-    let deltaY: number = this.posOnDown.y - this.posOnUp.y
+	this.posOnUp = dir
+	//Vector3.
+	let arcLength = Vector3.GetAngleBetweenVectors(this.posOnDown, this.posOnUp, Vector3.Up()) * RAD2DEG
+	if(Math.abs(arcLength) < 12) return
+
+
+	let deltaX: number = this.posOnDown.x - this.posOnUp.x
+	let deltaY: number = this.posOnDown.y - this.posOnUp.y
+	
+	log("deltaX: ", deltaX, " deltaY: ", deltaY)
+
     let direction: Directions
-    if (Math.abs(deltaY) < 3 && deltaX < -5) {
+    if (deltaY < -0.3 && Math.abs(deltaX) < 0.2 ) {
       direction = Directions.UP
-    } else if (deltaY > 5 && Math.abs(deltaX) < 3) {
+    } else if ( Math.abs(deltaY) < 0.2 && deltaX < -0.3) {
       direction = Directions.RIGHT
-    } else if (Math.abs(deltaY) < 3 && deltaX > 5) {
+    } else if (deltaY > 0.3 && Math.abs(deltaX) < 0.2) {
       direction = Directions.DOWN
-    } else if (deltaY < -5 && Math.abs(deltaX) < 3) {
+    } else if ( Math.abs(deltaY) < 0.2 && deltaX > 0.3) {
       direction = Directions.LEFT
     }
     log('direction ' + direction)

@@ -253,7 +253,7 @@ function hasLost(){
 // Board
 const boardWrapper = new Entity()
 boardWrapper.addComponent(new Transform({
-  position: new Vector3(8, 0, 8),
+  position: new Vector3(8, 0, 11),
   scale: new Vector3(0.05, 0.05, 0.05)
 }))
 boardWrapper.addComponent(new OpenLerp())
@@ -324,7 +324,7 @@ const board = new BoardData()
 const island = new Entity()
 island.addComponent(new GLTFShape('models/Island.gltf'))
 island.addComponent(new Transform({
-  position: new Vector3(8, 0, 8),
+  position: new Vector3(8, 0, 11),
   rotation: Quaternion.Euler(0, 270, 0)
 }))
 engine.addEntity(island)
@@ -338,7 +338,7 @@ const banner = new Entity()
 banner.addComponent(bannerMaterial)
 banner.addComponent(new PlaneShape())
 banner.addComponent(new Transform({
-  position: new Vector3(8, 8, 8),
+  position: new Vector3(8, 8, 11),
   scale: new Vector3(6, 6, 6)
 }))
 engine.addEntity(banner)
@@ -346,7 +346,7 @@ engine.addEntity(banner)
 // Chest
 const chest = new Entity()
 chest.addComponent(new Transform({
-  position: new Vector3(8, 0.2, 8),
+  position: new Vector3(8, 0.2, 11),
   rotation: Quaternion.Euler(0, 270, 0),
   scale: new Vector3(0.8, 0.8, 0.8)
 }))
@@ -410,16 +410,16 @@ let swipeChecker = new SwipeDetection()
 
 // Swipe detection
 
-input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, e => {
+input.subscribe('BUTTON_DOWN', ActionButton.POINTER, false, e => {
   swipeChecker.buttonDown(e.direction)
-  log("button down")
+  //log("button down")
 })
 
 // button up event
-input.subscribe('BUTTON_UP', ActionButton.PRIMARY, false, e => {
+input.subscribe('BUTTON_UP', ActionButton.POINTER, false, e => {
   let direction = swipeChecker.buttonUp(e.direction)
   shiftBlocks(direction)
-  log("button up", direction)
+  //log("button up", direction)
 })
 
 // loose
