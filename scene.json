@@ -22,13 +22,28 @@
     "contentRating": "E",
     "fly": true,
     "voiceEnabled": true,
-    "blacklist": [],
-    "teleportPosition": ""
+    "blacklist": [] 
   },
   "tracking": {
     "origin": "example",
     "boilerplate": "2048"
   },
   "main": "bin/game.js",
-  "tags": []
+  "tags": [],
+  "spawnPoints": [
+    {
+      "name": "spawn1",
+      "default": true,
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  },
+	  "cameraTarget": {
+        "x": 8,
+        "y": 1,
+        "z": 8
+      }
+    }
+  ]
 }
