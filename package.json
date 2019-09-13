@@ -12,7 +12,7 @@
   "author": "",
   "license": "Not defined",
   "devDependencies": {
-    "decentraland-ecs": "next"
+    "decentraland-ecs": "latest"
   },
   "dependencies": {}
 }
