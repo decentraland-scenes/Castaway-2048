@@ -23,7 +23,7 @@ export class SwipeDetection {
 	this.posOnUp = dir
 	//Vector3.
 	let arcLength = Vector3.GetAngleBetweenVectors(this.posOnDown, this.posOnUp, Vector3.Up()) * RAD2DEG
-	if(Math.abs(arcLength) < 12) return
+	if(Math.abs(arcLength) < 10) return
 
 
 	let deltaX: number = this.posOnDown.x - this.posOnUp.x
@@ -33,13 +33,13 @@ export class SwipeDetection {
 
     let direction: Directions
     if (deltaY < -0.3 && Math.abs(deltaX) < 0.2 ) {
-      direction = Directions.UP
-    } else if ( Math.abs(deltaY) < 0.2 && deltaX < -0.3) {
-      direction = Directions.RIGHT
-    } else if (deltaY > 0.3 && Math.abs(deltaX) < 0.2) {
       direction = Directions.DOWN
-    } else if ( Math.abs(deltaY) < 0.2 && deltaX > 0.3) {
+    } else if ( Math.abs(deltaY) < 0.2 && deltaX < -0.3) {
       direction = Directions.LEFT
+    } else if (deltaY > 0.3 && Math.abs(deltaX) < 0.2) {
+      direction = Directions.UP
+    } else if ( Math.abs(deltaY) < 0.2 && deltaX > 0.3) {
+      direction = Directions.RIGHT
     }
     log('direction ' + direction)
     return direction
