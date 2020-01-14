@@ -349,7 +349,7 @@ const island = new Entity()
 island.addComponent(new GLTFShape('models/Island.gltf'))
 island.addComponent(
   new Transform({
-    position: new Vector3(8, 0, 10.5),
+    position: new Vector3(8, 0, 10.25),
     rotation: Quaternion.Euler(0, 270, 0)
   })
 )
