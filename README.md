@@ -2,7 +2,7 @@
 
 A fully fledged game, based on the popular game 2048, where the values are represented by a series of gems of increasing values. Click and drag to displace the gems on the board and merge them into greater values till you reach 2048.
 
-![](screenshot/screenshot.png)
+<img src="screenshot/screenshot.png" width="500">
 
 This scene shows you
 
