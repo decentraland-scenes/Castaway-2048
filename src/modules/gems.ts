@@ -44,9 +44,9 @@ export class MoveGems implements ISystem {
     this.gemModels = models
   }
   update(dt: number) {
-    for (let gem of gems.entities) {
-      let data = gem.getComponent(GemData)
-      let transform = gem.getComponent(Transform)
+    for (const gem of gems.entities) {
+      const data = gem.getComponent(GemData)
+      const transform = gem.getComponent(Transform)
       if (data.lerp < 1) {
         data.lerp += dt * 2
         if (data.lerp > 1) {
@@ -58,15 +58,15 @@ export class MoveGems implements ISystem {
         data.oldPos = data.pos
         if (data.willDie) {
           engine.removeEntity(gem)
-          for (let targetGem of gems.entities) {
-            let targetData = targetGem.getComponent(GemData)
+          for (const targetGem of gems.entities) {
+            const targetData = targetGem.getComponent(GemData)
             if (
-              targetData.pos.x == data.pos.x &&
-              targetData.pos.y == data.pos.y &&
+              targetData.pos.x === data.pos.x &&
+              targetData.pos.y === data.pos.y &&
               targetData.willUpgrade
             ) {
-              let targetModelVal = targetData.val
-              let shapeIndex = gemValues.indexOf(targetModelVal)
+              const targetModelVal = targetData.val
+              const shapeIndex = gemValues.indexOf(targetModelVal)
               targetGem.addComponentOrReplace(this.gemModels[shapeIndex])
               targetData.willUpgrade = false
             }
@@ -80,9 +80,9 @@ export class MoveGems implements ISystem {
 // enlarge gems that just appeared on the board
 export class GrowGems implements ISystem {
   update(dt: number) {
-    for (let gem of gems.entities) {
-      let data = gem.getComponent(GemData)
-      let transform = gem.getComponent(Transform)
+    for (const gem of gems.entities) {
+      const data = gem.getComponent(GemData)
+      const transform = gem.getComponent(Transform)
       if (data.sizeLerp < 1) {
         data.sizeLerp += dt
         transform.scale.setAll(Scalar.Lerp(0.05, 0.5, data.sizeLerp))
@@ -93,6 +93,6 @@ export class GrowGems implements ISystem {
 
 // translate x,y 2D coordinates into x,y,z 3D coordinates
 export function gridToScene(x: number, y: number) {
-  let convertedPos = new Vector3(x + 1 - 2.5, -y + 1 + 0.5, 0)
+  const convertedPos = new Vector3(x + 1 - 2.5, -y + 1 + 0.5, 0)
   return convertedPos
 }

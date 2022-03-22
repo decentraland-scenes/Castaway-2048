@@ -1,5 +1,3 @@
-
-
 // lerp data for items that come out of the chest
 @Component('openLerp')
 export class OpenLerp {
@@ -13,33 +11,33 @@ export class OpenLerp {
 
 // motion for items that come out of the chest
 export class OpenBoard implements ISystem {
-    board: IEntity
-    constructor(board){
-      this.board = board
-    }
-    update(dt: number) {
-      let transform = this.board.getComponent(Transform)
-      let state = this.board.getComponent(OpenLerp)
-      if (state.open == true && state.fraction < 1) {
-        transform.position = Vector3.Lerp(
-          state.closedPos,
-          state.openPos,
-          state.fraction
-        )
-        transform.scale.setAll(
-          Scalar.Lerp(state.closedScale, state.openScale, state.fraction)
-        )
-        state.fraction += 1 / 30
-      } else if (state.open == false && state.fraction > 0) {
-        transform.position = Vector3.Lerp(
-          state.closedPos,
-          state.openPos,
-          state.fraction
-        )
-        transform.scale.setAll(
-          Scalar.Lerp(state.closedScale, state.openScale, state.fraction)
-        )
-        state.fraction -= 1 / 30
-      }
+  board: IEntity
+  constructor(board) {
+    this.board = board
+  }
+  update(dt: number) {
+    const transform = this.board.getComponent(Transform)
+    const state = this.board.getComponent(OpenLerp)
+    if (state.open === true && state.fraction < 1) {
+      transform.position = Vector3.Lerp(
+        state.closedPos,
+        state.openPos,
+        state.fraction
+      )
+      transform.scale.setAll(
+        Scalar.Lerp(state.closedScale, state.openScale, state.fraction)
+      )
+      state.fraction += 1 / 30
+    } else if (state.open === false && state.fraction > 0) {
+      transform.position = Vector3.Lerp(
+        state.closedPos,
+        state.openPos,
+        state.fraction
+      )
+      transform.scale.setAll(
+        Scalar.Lerp(state.closedScale, state.openScale, state.fraction)
+      )
+      state.fraction -= 1 / 30
     }
   }
+}

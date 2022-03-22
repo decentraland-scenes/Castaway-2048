@@ -1,6 +1,3 @@
-
-
-
 export class BoardData {
   won: boolean
   lost: boolean
