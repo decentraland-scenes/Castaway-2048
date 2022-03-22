@@ -5,7 +5,7 @@ import {
   gems,
   gemValues,
   GrowGems,
-  gridToScene
+  gridToScene,
 } from './modules/gems'
 import { SwipeDetection, Directions } from './modules/swiping'
 import { BoardData } from './modules/board'
@@ -81,12 +81,12 @@ const spawner = {
     td.reset(val, x, y)
 
     engine.addEntity(ent)
-  }
+  },
 }
 
 function addRandomGem() {
   const emptyCells: number[] = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
   ]
 
   for (const gem in gems.entities) {
@@ -217,7 +217,7 @@ function hasLost() {
     [null, null, null, null],
     [null, null, null, null],
     [null, null, null, null],
-    [null, null, null, null]
+    [null, null, null, null],
   ]
   for (const gem in gems.entities) {
     const gemData = gems.entities[gem].getComponent(GemData)
@@ -249,7 +249,7 @@ const boardWrapper = new Entity()
 boardWrapper.addComponent(
   new Transform({
     position: new Vector3(8, 0, 10.5),
-    scale: new Vector3(0.05, 0.05, 0.05)
+    scale: new Vector3(0.05, 0.05, 0.05),
   })
 )
 boardWrapper.addComponent(new OpenLerp())
@@ -270,7 +270,7 @@ function doTutorial() {
   instructions.addComponent(
     new Transform({
       position: new Vector3(0, 3, -1),
-      scale: new Vector3(4, 4, 1)
+      scale: new Vector3(4, 4, 1),
     })
   )
   engine.addEntity(instructions)
@@ -284,7 +284,7 @@ function doTutorial() {
   button.setParent(boardWrapper)
   button.addComponent(
     new Transform({
-      position: new Vector3(0, -2.5, -0.5)
+      position: new Vector3(0, -2.5, -0.5),
     })
   )
   button.addComponent(
@@ -308,7 +308,7 @@ function doTutorial() {
   buttonText.getComponent(TextShape).fontSize = 1
   buttonText.addComponent(
     new Transform({
-      position: new Vector3(0, 0, -0.3)
+      position: new Vector3(0, 0, -0.3),
     })
   )
   engine.addEntity(buttonText)
@@ -335,7 +335,7 @@ island.addComponent(new GLTFShape('models/Island.gltf'))
 island.addComponent(
   new Transform({
     position: new Vector3(8, 0, 10.25),
-    rotation: Quaternion.Euler(0, 270, 0)
+    rotation: Quaternion.Euler(0, 270, 0),
   })
 )
 engine.addEntity(island)
@@ -351,7 +351,7 @@ banner.addComponent(new PlaneShape())
 banner.addComponent(
   new Transform({
     position: new Vector3(8, 8, 10.5),
-    scale: new Vector3(6, 6, 6)
+    scale: new Vector3(6, 6, 6),
   })
 )
 engine.addEntity(banner)
@@ -362,7 +362,7 @@ chest.addComponent(
   new Transform({
     position: new Vector3(8, 0.2, 10.5),
     rotation: Quaternion.Euler(0, 270, 0),
-    scale: new Vector3(0.8, 0.8, 0.8)
+    scale: new Vector3(0.8, 0.8, 0.8),
   })
 )
 chest.addComponent(new GLTFShape('models/Chest.gltf'))
@@ -374,6 +374,7 @@ const chestClose = new AnimationState('Close')
 chestClose.looping = false
 chestAnimator.addClip(chestOpen)
 chestAnimator.addClip(chestClose)
+
 chest.addComponent(
   new OnPointerDown(
     (e) => {
@@ -402,6 +403,9 @@ chestLightAnimator.addClip(chestLightOpen)
 chestLightAnimator.addClip(chestLightClose)
 engine.addEntity(chestLight)
 
+chestOpen.stop()
+chestLightOpen.stop()
+
 // Map
 const map = new Entity()
 map.setParent(boardWrapper)
@@ -409,7 +413,7 @@ map.addComponent(
   new Transform({
     position: new Vector3(0, 1, 0),
     rotation: Quaternion.Euler(0, 180, 0),
-    scale: new Vector3(2, 2, 2)
+    scale: new Vector3(2, 2, 2),
   })
 )
 map.addComponent(new GLTFShape('models/Map.gltf'))
