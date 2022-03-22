@@ -11,8 +11,8 @@
   },
   "author": "",
   "license": "Not defined",
-  "devDependencies": {
-    "decentraland-ecs": "^6.4.4"
-  },
-  "dependencies": {}
+  "devDependencies": {},
+  "dependencies": {
+    "decentraland-ecs": "latest"
+  }
 }
